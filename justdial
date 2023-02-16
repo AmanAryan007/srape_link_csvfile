@@ -1,0 +1,22 @@
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+import requests
+df = pd.read_csv (r"D:\NORTH 24 PARAGANS  ELECTRICAL DEALERS\aJIJNAGAR.csv")
+for index, row in df.iterrows ():
+	try:
+		url_id = row['resultbox_imagebox href']
+
+		headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"}
+
+		response = requests.get(url_id, headers=headers)
+	except:
+		print("error")
+	soup = BeautifulSoup(response.content, 'html.parser')
+	article1 = soup.find ("span", {"class": "scmp"})
+	article = soup.find("span", {"class": "jaddt"})
+	try:
+		print (article1.text.strip (),end = "=  ")
+		print (article.text.strip ())
+	except:
+		print("error")
